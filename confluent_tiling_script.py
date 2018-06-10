@@ -34,7 +34,7 @@ def confluent_tiles(image):
 
 			tile = image[y_start:y_stop, x_start:x_stop]
 
-			if cell_background_ratio(tile) > 0.7:
+			if cell_background_ratio(tile) > 0.9: # select FOVs with greater than 90% cell confluence
 				confluent_tiles.append((i, j, cell_background_ratio(tile)))
 			else:
 				continue
