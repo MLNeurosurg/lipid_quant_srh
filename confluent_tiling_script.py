@@ -8,13 +8,6 @@ import numpy as np
 from skimage.io import imsave, imread
 import sys
 
-'''
-# only tiled the smaller wt_cyclo
-Had to decrease the percent confluency
-1) npa_cyclo (0.2)
-
-'''
-
 tile_size = 250
 step_size = 100
 
@@ -59,8 +52,8 @@ def image_tile_dictionary(img_dict):
 					tile_dict[cell_line] = []
 
 			for i, j, ratio in conf_tiles:
-				xstart = j * 100  # "column start"
-				ystart = i * 100 # "row start"
+				xstart = j * step_size  # "column start"
+				ystart = i * step_size # "row start"
 				xstop = xstart + tile_size
 				ystop = ystart + tile_size
 
