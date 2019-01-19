@@ -49,7 +49,7 @@ def image_tile_dictionary(img_dict):
 			conf_tiles = confluent_tiles(image) # list of confluent tiles
 
 			if cell_line not in tile_dict.keys():
-					tile_dict[cell_line] = []
+				tile_dict[cell_line] = []
 
 			for i, j, ratio in conf_tiles:
 				xstart = j * step_size  # "column start"
