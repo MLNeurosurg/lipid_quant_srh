@@ -8,19 +8,40 @@ import numpy as np
 from skimage.io import imsave, imread
 import sys
 
+# specify image width/height and step size
 tile_size = 250
 step_size = 100
 
-def cell_background_ratio(img):
+def cell_background_ratio(img, threshold = 400):
+	"""
+	Thresholding method to segmented the cellular regions within each image and remove background
+	Parameters:
+	image (numpy array): input image. This will be a tile from the sliding window
+	threshold (int): threshold pixel intensity value for background 
+	
+	Returns:
+	ratio (float): ratio of the area of cell/background
+	"""
 	flat = img.flatten()
-	segment_cells = flat[flat > 400]
+	segment_cells = flat[flat > threshold]
 	try:
 		ratio = round(len(segment_cells)/len(flat), ndigits=2)
 	except ZeroDivisionError:
 		ratio = 0
 	return ratio
 
-def confluent_tiles(image):
+def confluent_tiles(img):
+	"""
+    Summary line. 
+  
+    Extended description of function. 
+  
+    Parameters: 
+    image (numpy array): input image 
+  
+    Returns: 
+    tuple: a 3-tuple with x, y location and ratio of cells/background
+	"""
 
 	num_starts = int(image.shape[0]/step_size) - 3 # this will cut off last 50 pixels
 	confluent_tiles = []
@@ -32,7 +53,7 @@ def confluent_tiles(image):
 			x_start = j * step_size
 			x_stop = x_start + tile_size
 
-			tile = image[y_start:y_stop, x_start:x_stop]
+			tile = img[y_start:y_stop, x_start:x_stop]
 
 			if cell_background_ratio(tile) > 0.9: # select FOVs with greater than 90% cell confluence
 				confluent_tiles.append((i, j, cell_background_ratio(tile)))
